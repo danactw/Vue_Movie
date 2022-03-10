@@ -3,9 +3,13 @@
   import PageFooter from './components/pageFooter.vue'
   import Search from './components/search.vue'
   import MovieTable from './components/movieTable.vue'
+  import Pagination from './components/pagination.vue';
 
   const movieData = ref([])
   const currentPage = ref(1)
+  const setCurrentPage = (page) => {
+    currentPage.value = page
+  }
   const dataPerPage = ref(12)
   const searchInput = ref('')
   const totalPage = computed(()=>Math.ceil(searchedData.value.length/dataPerPage.value))
@@ -54,21 +58,7 @@
   </div>
   <div class='content'>
     <MovieTable :slicedData="slicedData"/>
-
-    <div class="pagination-container">
-      <span class="back-page" v-if="currentPage !== 1" @click="currentPage--" >＜</span>
-      <div class="pagination">
-        <template v-for="page in displayedPage" :key="page">
-          <span @click="currentPage = page + offsetPage"
-                :class="(page + offsetPage) === currentPage ? 'active' : '' "
-                v-if="page + offsetPage <= totalPage"
-          > {{ page + offsetPage }} </span>
-        </template>
-      </div>
-      <span class="next-page" v-if="currentPage !== totalPage" @click="currentPage++" >＞</span>
-      <div class="pagination-counter">
-      </div> 
-    </div>
+    <Pagination :currentPage="currentPage" :displayedPage="displayedPage" :offsetPage="offsetPage" :totalPage="totalPage" @updateCurrentPage="setCurrentPage" />
   </div>
 
   <PageFooter />
