@@ -29,16 +29,6 @@
 
   const setSearchInput = (val) => {searchInput.value = val}
 
-  const displayedPage = computed(()=>{
-    if (currentPage.value === 1) return 3;
-    if (currentPage.value === 2) return 4;
-    if (currentPage.value >= 3) return 5;  
-  })
-
-  const offsetPage = computed(()=>{
-    return currentPage.value < 3 ? 0 : currentPage.value - 3
-  })
-
   fetch('https://top-250-movies.herokuapp.com/api/v1/movies/top')
     .then(res => res.json())
     .then(data => {
@@ -56,9 +46,11 @@
       <Search :searchInput="searchInput" @updateSearch="setSearchInput" />
     </div>
   </div>
+
   <div class='content'>
     <MovieTable :slicedData="slicedData"/>
-    <Pagination :currentPage="currentPage" :displayedPage="displayedPage" :offsetPage="offsetPage" :totalPage="totalPage" @updateCurrentPage="setCurrentPage" />
+
+    <Pagination :currentPage="currentPage" :totalPage="totalPage" @updateCurrentPage="setCurrentPage" />
   </div>
 
   <PageFooter />

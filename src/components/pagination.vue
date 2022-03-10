@@ -1,9 +1,8 @@
 <script>
+  import { computed } from "vue"
   export default {
     props: {
       currentPage: Number,
-      displayedPage: Number,
-      offsetPage: Number,
       totalPage: Number
     },
     setup(props, {emit}) {
@@ -11,8 +10,20 @@
         emit('updateCurrentPage', val)
       }
 
+      const displayedPage = computed(()=>{
+        if (props.currentPage === 1) return 3;
+        if (props.currentPage === 2) return 4;
+        if (props.currentPage >= 3) return 5;  
+      })
+
+      const offsetPage = computed(()=>{
+        return props.currentPage < 3 ? 0 : props.currentPage - 3
+      })
+
       return{
-        setPage
+        setPage,
+        displayedPage,
+        offsetPage
       }
     }
   }
