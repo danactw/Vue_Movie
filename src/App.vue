@@ -53,28 +53,8 @@
     </div>
   </div>
   <div class='content'>
-    <table class="styled-table">
-      <thead>
-        <tr>
-          <th>排名</th>
-          <th>片名</th>
-          <th>年份</th>
-          <th>導演</th>
-          <th>主要演員</th>
-          <th>評分</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="movie in slicedData" :key="movie">
-          <td> {{ movie.rank }} </td>
-          <td><a href="連結">{{ movie.title }}</a></td>
-          <td> {{ movie.year }} </td>
-          <td> {{ movie.director }} </td>
-          <td> {{ movie.main_stars }} </td>
-          <td> {{ movie.rating }} </td>
-        </tr> 
-      </tbody>
-    </table>
+    <MovieTable :slicedData="slicedData"/>
+
     <div class="pagination-container">
       <span class="back-page" v-if="currentPage !== 1" @click="currentPage--" >＜</span>
       <div class="pagination">
@@ -91,7 +71,6 @@
     </div>
   </div>
 
-  <div v-if="searchedData.length===0" >很抱歉！目前沒有您搜尋的電影！</div>
   <PageFooter />
 </template>
 
