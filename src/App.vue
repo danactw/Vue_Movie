@@ -1,5 +1,8 @@
 <script setup>
   import { computed, ref, watch } from 'vue'
+  import PageFooter from './components/pageFooter.vue'
+  import Search from './components/search.vue'
+  import MovieTable from './components/movieTable.vue'
 
   const movieData = ref([])
   const currentPage = ref(1)
@@ -19,6 +22,8 @@
   })
 
   watch(()=>searchInput.value, ()=>currentPage.value = 1)
+
+  const setSearchInput = (val) => {searchInput.value = val}
 
   const displayedPage = computed(()=>{
     if (currentPage.value === 1) return 3;
@@ -44,13 +49,9 @@
       <div>
         <a class="logo" href="#">5x<span>Movies</span></a>
       </div>
-      <form class="search-field">
-        <input v-model="searchInput" type="text" class="search-term" placeholder="請搜尋...">
-        <button type="submit" class="search-button">搜尋</button>
-      </form>
+      <Search :searchInput="searchInput" @updateSearch="setSearchInput" />
     </div>
   </div>
-
   <div class='content'>
     <table class="styled-table">
       <thead>
@@ -89,12 +90,9 @@
       </div> 
     </div>
   </div>
-  
-  <div v-if="searchedData.length===0" >很抱歉！目前沒有您搜尋的電影！</div>
 
-  <footer>
-    <p>5xCampus © 2021 Ruby on Rails</p>
-  </footer>
+  <div v-if="searchedData.length===0" >很抱歉！目前沒有您搜尋的電影！</div>
+  <PageFooter />
 </template>
 
 <style>
