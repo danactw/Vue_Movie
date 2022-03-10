@@ -5,10 +5,20 @@
   const currentPage = ref(1)
   const dataPerPage = ref(12)
   const searchInput = ref('')
-  const totalPage = computed(()=>Math.ceil(movieData.value.length/dataPerPage.value))
+  const totalPage = computed(()=>Math.ceil(searchedData.value.length/dataPerPage.value))
   const firstDataPerPage = computed(()=>(currentPage.value-1)*12)
   const lastDataPerPage = computed(()=>currentPage.value*12)
-  const slicedData = computed(()=>movieData.value.slice(firstDataPerPage.value, lastDataPerPage.value))
+  const slicedData = computed(()=>searchedData.value.slice(firstDataPerPage.value, lastDataPerPage.value))
+
+  const searchedData = computed(()=>{
+    if (searchInput.value === '') {
+      return movieData.value
+    } else {
+      return movieData.value.filter((movie)=>movie.title.includes(searchInput.value))
+    }
+  })
+
+  watch(()=>searchInput.value, ()=>currentPage.value = 1)
 
   const displayedPage = computed(()=>{
     if (currentPage.value === 1) return 3;
@@ -79,6 +89,8 @@
       </div> 
     </div>
   </div>
+  
+  <div v-if="searchedData.length===0" >很抱歉！目前沒有您搜尋的電影！</div>
 
   <footer>
     <p>5xCampus © 2021 Ruby on Rails</p>
