@@ -3,7 +3,7 @@
   import PageFooter from './components/pageFooter.vue'
   import Search from './components/search.vue'
   import MovieTable from './components/movieTable.vue'
-  import Pagination from './components/pagination.vue';
+  import Pagination from './components/pagination_new.vue';
 
   const movieData = ref([])
   const currentPage = ref(1)
