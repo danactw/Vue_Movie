@@ -1,5 +1,5 @@
 <script>
-import TableRow from "../tableRow.vue";
+import TableRow from "./tableRow.vue";
   export default {
     props: {
         slicedData: Array,
